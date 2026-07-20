@@ -3,22 +3,22 @@ package com.example.academy.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "professores")
+@Document(collection = "professores")
 public class Professor {
 
     @Id
     private String id;
 
-    private String name;
+    private String nome;
     private String especialidade;
     private String email;
     private Boolean active;
 
     public Professor (){}
 
-    public Professor(String id, String name, String especialidade, String email, Boolean active) {
+    public Professor(String id, String nome, String especialidade, String email, Boolean active) {
         this.id = id;
-        this.name = name;
+        this.nome = nome;
         this.especialidade = especialidade;
         this.email = email;
         this.active = active;
@@ -32,12 +32,12 @@ public class Professor {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String name) {
+        this.nome = name;
     }
 
     public String getEspecialidade() {

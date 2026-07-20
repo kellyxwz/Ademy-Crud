@@ -4,7 +4,7 @@ import com.example.academy.model.Professor;
 
 public record ProfessorResponseDTO (
         String id,
-        String name,
+        String nome,
         String especialidade,
         String email
 )
@@ -13,7 +13,7 @@ public record ProfessorResponseDTO (
     public ProfessorResponseDTO(Professor professor) {
         this(
                 professor.getId(),
-                professor.getName(),
+                professor.getNome(),
                 professor.getEspecialidade(),
                 professor.getEmail()
         );
