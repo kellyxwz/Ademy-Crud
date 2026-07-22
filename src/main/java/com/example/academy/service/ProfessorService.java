@@ -27,11 +27,11 @@ public class ProfessorService {
         return new ProfessorResponseDTO(professor);
     }
 
-    public void delete (String id){
+    public void delete (Long id){
         professorRepository.deleteById(id);
     }
 
-    public ProfessorResponseDTO update(String id, ProfessorRequestDTO updateData){
+    public ProfessorResponseDTO update(Long id, ProfessorRequestDTO updateData){
         Professor professor = professorRepository.findById(id).orElseThrow(() -> new RuntimeException("usuário não encontrado"));
 
         updateData(professor, updateData);
