@@ -33,13 +33,13 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById (@PathVariable String id){
+    public ResponseEntity<Void> deleteById (@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProfessorResponseDTO> update (@PathVariable String id, @RequestBody ProfessorRequestDTO requestDTO){
+    public ResponseEntity<ProfessorResponseDTO> update (@PathVariable Long id, @RequestBody ProfessorRequestDTO requestDTO){
         ProfessorResponseDTO professor = service.update(id, requestDTO);
 
         return ResponseEntity.ok(professor);
