@@ -1,8 +1,8 @@
 package com.example.academy.repository;
 
 import com.example.academy.model.Professor;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProfessorRepository extends MongoRepository<Professor, Long> {
+public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
 }
