@@ -1,13 +1,15 @@
 package com.example.academy.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
-@Document(collection = "professores")
+
+@Entity
+@Table(name = "professor")
 public class Professor {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nome;
     private String especialidade;
@@ -16,7 +18,7 @@ public class Professor {
 
     public Professor (){}
 
-    public Professor(String id, String nome, String especialidade, String email, Boolean active) {
+    public Professor(Long id, String nome, String especialidade, String email, Boolean active) {
         this.id = id;
         this.nome = nome;
         this.especialidade = especialidade;
@@ -24,11 +26,11 @@ public class Professor {
         this.active = active;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

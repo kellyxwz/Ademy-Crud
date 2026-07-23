@@ -3,7 +3,7 @@ package com.example.academy.dto.reponse;
 import com.example.academy.model.Professor;
 
 public record ProfessorResponseDTO (
-        String id,
+        Long id,
         String nome,
         String especialidade,
         String email
