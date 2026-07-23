@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/disciplinas")
+@RequestMapping("/api/disciplinas")
 public class DisciplinaController {
 
     private final DisciplinaService service;
@@ -34,13 +34,13 @@ public class DisciplinaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisciplinaResponseDTO> update (@PathVariable String id, @RequestBody DisciplinaRequestDTO requestDTO){
+    public ResponseEntity<DisciplinaResponseDTO> update (@PathVariable Long id, @RequestBody DisciplinaRequestDTO requestDTO){
         DisciplinaResponseDTO disciplina = service.update(id, requestDTO);
         return ResponseEntity.ok(disciplina);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete (@PathVariable String id){
+    public ResponseEntity<Void> delete (@PathVariable Long id){
         service.delete(id);
 
         return ResponseEntity.noContent().build();
