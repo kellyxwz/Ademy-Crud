@@ -1,31 +1,36 @@
 package com.example.academy.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "disciplina")
+@Entity
+@Table(name ="disciplina")
 public class Disciplina {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private Integer cargaHoraria;
     private Boolean ativo;
 
     public Disciplina(){}
 
-    public Disciplina(String id, String nome, Integer cargaHoraria, Boolean ativo) {
+    public Disciplina(Long id, String nome, Integer cargaHoraria, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
         this.ativo = ativo;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
