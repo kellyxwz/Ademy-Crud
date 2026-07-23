@@ -27,11 +27,11 @@ public class DisciplinaService {
         return new DisciplinaResponseDTO(disciplinaSalva);
     }
 
-    public void delete (String id){
+    public void delete (Long id){
         repository.deleteById(id);
     }
 
-    public DisciplinaResponseDTO update(String id, DisciplinaRequestDTO updateData){
+    public DisciplinaResponseDTO update(Long id, DisciplinaRequestDTO updateData){
         Disciplina disciplina = repository.findById(id).orElseThrow(() -> new RuntimeException("Disciplina não encontrada"));
         updateData(disciplina, updateData);
         repository.save(disciplina);
