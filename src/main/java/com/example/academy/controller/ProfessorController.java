@@ -2,7 +2,9 @@ package com.example.academy.controller;
 
 import com.example.academy.dto.reponse.ProfessorResponseDTO;
 import com.example.academy.dto.request.ProfessorRequestDTO;
+import com.example.academy.model.Professor;
 import com.example.academy.service.ProfessorService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,21 @@ public class ProfessorController {
     public ResponseEntity<List<ProfessorResponseDTO>> findAll(){
         List<ProfessorResponseDTO> list = service.findAll();
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/busca")
+    public Page<Professor> buscaAvancada (@RequestParam(required = false) String nome,
+                                          @RequestParam(required = false) String email,
+                                          @RequestParam(required = false) String especialidade,
+                                          @RequestParam(required = false)  Integer idadeMin,
+                                          @RequestParam(required = false) Integer idadeMax,
+                                          @RequestParam(required = false) Boolean ativo,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "2") int size,
+                                          @RequestParam(defaultValue = "id") String sortBy,
+                                          @RequestParam(defaultValue = "asc") String direction){
+
+        return service.buscaAvancada(nome, email, especialidade, idadeMin, idadeMax, ativo, page, size, sortBy, direction);
     }
 
     @PostMapping

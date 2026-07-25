@@ -4,9 +4,15 @@ import com.example.academy.dto.reponse.DisciplinaResponseDTO;
 import com.example.academy.dto.request.DisciplinaRequestDTO;
 import com.example.academy.model.Disciplina;
 import com.example.academy.repository.DisciplinaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 public class DisciplinaService {
@@ -19,6 +25,30 @@ public class DisciplinaService {
 
     public List<DisciplinaResponseDTO> findAll(){
         return repository.findAll().stream().map(DisciplinaResponseDTO :: new).toList();
+    }
+
+    public Page<Disciplina> buscarAvancado(String nome,
+                                           Boolean ativo,
+                                           int page,
+                                           int size,     //parametros de busca q vai receber da url ai vc utiliza nos filtros
+                                           String sortBy,
+                                           String direction) {
+
+        Sort sort = "desc".equalsIgnoreCase(direction) //aqui monta a ordenação, pega a url e tranforma em querys
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort); //monta a paginação com os dados q a url trazer
+
+        Specification<Disciplina> spec = Specification.unrestricted();  //cria tipo um container com os filtros vazios
+
+        if (nome != null && !nome.isBlank()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("nome")), "%" + nome.toLowerCase() + "%"));
+        }
+        if (ativo != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("ativo"), ativo));
+        }
+
+        return repository.findAll(spec, pageable); //retorna todos os arquivos com os filtos(spec), e as configurações da paginação (pageable)
     }
 
     public DisciplinaResponseDTO create(DisciplinaRequestDTO requestDTO){

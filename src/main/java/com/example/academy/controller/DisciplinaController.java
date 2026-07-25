@@ -2,7 +2,9 @@ package com.example.academy.controller;
 
 import com.example.academy.dto.reponse.DisciplinaResponseDTO;
 import com.example.academy.dto.request.DisciplinaRequestDTO;
+import com.example.academy.model.Disciplina;
 import com.example.academy.service.DisciplinaService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,17 @@ public class DisciplinaController {
         List<DisciplinaResponseDTO> list = service.findAll();
 
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/busca")
+    public Page<Disciplina> buscaAvancada(@RequestParam(required = false) String nome,
+                                          @RequestParam(required = false) Boolean ativo,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size,
+                                          @RequestParam(defaultValue = "id") String sortBy,
+                                          @RequestParam(defaultValue = "asc") String direction){
+
+        return service.buscarAvancado(nome, ativo, page, size, sortBy, direction);
     }
 
     @PostMapping
