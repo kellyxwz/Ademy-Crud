@@ -30,7 +30,7 @@ public class ProfessorService {
                                           String email,
                                           String especialidade,
                                           Integer idadeMin,
-                                          Integer idadeMax,  //aqui recebe os paramettros
+                                          Integer idadeMax,
                                           Boolean ativo,
                                           int page,
                                           int size,
@@ -50,7 +50,7 @@ public class ProfessorService {
         if (email != null && !email.isBlank()){
             spec = spec.and(((root, query, cb) -> cb.like(cb.lower(root.get("email")),  "%" + email.toLowerCase() + "%" )));
         }
-        if (especialidade != null && especialidade.isBlank()){
+        if (especialidade != null && !especialidade.isBlank()){
             spec = spec.and(((root, query, cb) -> cb.like(cb.lower(root.get("especialidade")), "%" + especialidade.toLowerCase() + "%")));
         }
         if (idadeMax != null){
