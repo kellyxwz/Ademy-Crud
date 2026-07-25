@@ -5,9 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 
-import javax.annotation.processing.Generated;
-
-public class usuario {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +19,10 @@ public class usuario {
 
     private String role;
 
-    public usuario() {
+    public Usuario() {
     }
 
-    public usuario(Long id, String username, String password, String role) {
+    public Usuario(Long id, String username, String password, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
