@@ -30,7 +30,6 @@ public class SecurityFilter {
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/register").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("ALUNO", "PROFESSOR")
-                        // apenas PROFESSOR pode criar, editar e excluir
                         .requestMatchers(HttpMethod.POST, "/**").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.PUT, "/**").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.DELETE, "/**").hasRole("PROFESSOR")
