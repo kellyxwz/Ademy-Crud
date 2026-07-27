@@ -42,7 +42,7 @@ public class SecurityFilter {
 
     @Bean
     public FilterRegistrationBean<JwtFilter> jwtFilterFilterRegistration (JwtFilter jwt){
-        FilterRegistrationBean<JwtFilter> registration = new FilterRegistrationBean<>();
+        FilterRegistrationBean<JwtFilter> registration = new FilterRegistrationBean<>(jwt);
         registration.setEnabled(false);
 
         return registration;
