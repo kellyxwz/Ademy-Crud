@@ -7,6 +7,7 @@ import com.example.academy.service.ProfessorService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +24,20 @@ public class ProfessorController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO')")
     public ResponseEntity<List<ProfessorResponseDTO>> findAll(){
         List<ProfessorResponseDTO> list = service.findAll();
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfessorResponseDTO> findByID(@PathVariable Long id){
+        ProfessorResponseDTO professor = service.findById(id);
+        return ResponseEntity.ok(professor);
+    }
+
     @GetMapping("/busca")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO')")
     public Page<Professor> buscaAvancada (@RequestParam(required = false) String nome,
                                           @RequestParam(required = false) String email,
                                           @RequestParam(required = false) String especialidade,
@@ -44,18 +53,21 @@ public class ProfessorController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<ProfessorResponseDTO> create(@RequestBody ProfessorRequestDTO professorRequestDTO){
         ProfessorResponseDTO professor = service.create(professorRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(professor);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Void> deleteById (@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<ProfessorResponseDTO> update (@PathVariable Long id, @RequestBody ProfessorRequestDTO requestDTO){
         ProfessorResponseDTO professor = service.update(id, requestDTO);
 

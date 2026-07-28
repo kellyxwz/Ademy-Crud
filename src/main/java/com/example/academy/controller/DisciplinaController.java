@@ -7,12 +7,14 @@ import com.example.academy.service.DisciplinaService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/disciplinas")
+@CrossOrigin(origins = "*")
 public class DisciplinaController {
 
     private final DisciplinaService service;
@@ -22,13 +24,23 @@ public class DisciplinaController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO'")
     public ResponseEntity<List<DisciplinaResponseDTO>> findAll (){
         List<DisciplinaResponseDTO> list = service.findAll();
 
         return ResponseEntity.ok(list);
     }
 
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO'")
+    @GetMapping("/{id}")
+    public ResponseEntity<DisciplinaResponseDTO> findById(@PathVariable Long id){
+        DisciplinaResponseDTO disciplina = service.findById(id);
+
+        return ResponseEntity.ok(disciplina);
+    }
+
     @GetMapping("/busca")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO'")
     public Page<Disciplina> buscaAvancada(@RequestParam(required = false) String nome,
                                           @RequestParam(required = false) Boolean ativo,
                                           @RequestParam(defaultValue = "0") int page,
@@ -40,6 +52,7 @@ public class DisciplinaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<DisciplinaResponseDTO> create (@RequestBody DisciplinaRequestDTO requestDTO){
         DisciplinaResponseDTO disciplina = service.create(requestDTO);
 
@@ -47,12 +60,14 @@ public class DisciplinaController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<DisciplinaResponseDTO> update (@PathVariable Long id, @RequestBody DisciplinaRequestDTO requestDTO){
         DisciplinaResponseDTO disciplina = service.update(id, requestDTO);
         return ResponseEntity.ok(disciplina);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Void> delete (@PathVariable Long id){
         service.delete(id);
 
