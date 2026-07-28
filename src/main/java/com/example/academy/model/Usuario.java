@@ -14,19 +14,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Username é obrigatória")
     @Column(nullable = false, unique = true)
     private String username;
 
-    @NotBlank(message = "Senha é obrigatória")
     @Column(nullable = false)
-    @Size(min = 6, max = 20, message = "A senha deve ter entre 6 à 20 caracteres")
     private String password;
 
-    @NotBlank(message = "Role é obrigatória")
-    @Pattern(regexp = "^(ALUNO|PROFESSOR)$", message = "Role deve ser ALUNO ou PROFESSOR")
     @Column(nullable = false, length = 20)
     private String role;
+
+
     public Usuario() {
     }
 

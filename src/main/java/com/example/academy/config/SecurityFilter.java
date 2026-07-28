@@ -28,7 +28,7 @@ public class SecurityFilter {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( auth ->auth
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/register").hasRole("PROFESSOR")
+                        .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("ALUNO", "PROFESSOR")
                         .requestMatchers(HttpMethod.POST, "/**").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.PUT, "/**").hasRole("PROFESSOR")
