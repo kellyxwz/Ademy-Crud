@@ -4,6 +4,7 @@ import com.example.academy.dto.reponse.ProfessorResponseDTO;
 import com.example.academy.dto.request.ProfessorRequestDTO;
 import com.example.academy.model.Professor;
 import com.example.academy.service.ProfessorService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class ProfessorController {
 
     @PostMapping
     @PreAuthorize("hasRole('PROFESSOR')")
-    public ResponseEntity<ProfessorResponseDTO> create(@RequestBody ProfessorRequestDTO professorRequestDTO){
+    public ResponseEntity<ProfessorResponseDTO> create(@Valid @RequestBody ProfessorRequestDTO professorRequestDTO){
         ProfessorResponseDTO professor = service.create(professorRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(professor);
     }
@@ -68,7 +69,7 @@ public class ProfessorController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('PROFESSOR')")
-    public ResponseEntity<ProfessorResponseDTO> update (@PathVariable Long id, @RequestBody ProfessorRequestDTO requestDTO){
+    public ResponseEntity<ProfessorResponseDTO> update (@PathVariable Long id, @Valid @RequestBody ProfessorRequestDTO requestDTO){
         ProfessorResponseDTO professor = service.update(id, requestDTO);
 
         return ResponseEntity.ok(professor);
