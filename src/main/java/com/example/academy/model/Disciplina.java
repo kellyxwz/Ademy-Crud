@@ -9,8 +9,14 @@ public class Disciplina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 120)
     private String nome;
+
+    @Column(nullable = false)
     private Integer cargaHoraria;
+
+    @Column(nullable = false)
     private Boolean ativo;
 
     public Disciplina(){}
