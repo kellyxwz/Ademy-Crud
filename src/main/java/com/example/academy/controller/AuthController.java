@@ -6,10 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +25,7 @@ public class AuthController {
         this.service = service;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Map<String, String> login(@RequestBody Map<String, String> body ){
         try {
             String username = body.get("username");
@@ -49,7 +46,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/register")
+    @PostMapping("/register")
     public Map<String, String> register(@RequestBody Map<String, String> body){
         String username = body.get("username");
         String password = body.get("password");

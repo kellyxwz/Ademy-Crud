@@ -26,6 +26,11 @@ public class ProfessorService {
         return professorRepository.findAll().stream().map(ProfessorResponseDTO :: new).toList();
     }
 
+    public ProfessorResponseDTO findById(Long id){
+        Professor professor = professorRepository.findById(id).orElseThrow(() -> new RuntimeException("Professor não encontrado com id: " + id));
+        return new ProfessorResponseDTO(professor);
+    }
+
     public Page<Professor> buscaAvancada (String nome,
                                           String email,
                                           String especialidade,
@@ -38,12 +43,11 @@ public class ProfessorService {
                                           String direction){
 
         Sort sort = "desc".equalsIgnoreCase(direction)
-                ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();  //aqui monta a ordenação se vai ser crescente ou descrescente
+                ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        Specification<Professor> spec = Specification.unrestricted();  //
+        Specification<Professor> spec = Specification.unrestricted();
 
-        //define os filtros de busca e adiciona aos containers aquiiiii
         if (nome != null && !nome.isBlank()){
             spec = spec.and(((root, query, cb) -> cb.like(cb.lower(root.get("nome")), "%" + nome.toLowerCase() + "%")));
         }

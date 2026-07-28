@@ -2,6 +2,7 @@ package com.example.academy.model;
 
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Entity
 @Table(name = "usuario")

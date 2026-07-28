@@ -27,19 +27,25 @@ public class DisciplinaService {
         return repository.findAll().stream().map(DisciplinaResponseDTO :: new).toList();
     }
 
+    public DisciplinaResponseDTO findById(Long id){
+        Disciplina disciplina = repository.findById(id).orElseThrow(() -> new RuntimeException("Disciplina não encontrada com o id: " + id));
+
+        return new DisciplinaResponseDTO(disciplina);
+    }
+
     public Page<Disciplina> buscarAvancado(String nome,
                                            Boolean ativo,
                                            int page,
-                                           int size,     //parametros de busca q vai receber da url ai vc utiliza nos filtros
+                                           int size,
                                            String sortBy,
                                            String direction) {
 
-        Sort sort = "desc".equalsIgnoreCase(direction) //aqui monta a ordenação, pega a url e tranforma em querys
+        Sort sort = "desc".equalsIgnoreCase(direction)
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
-        Pageable pageable = PageRequest.of(page, size, sort); //monta a paginação com os dados q a url trazer
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        Specification<Disciplina> spec = Specification.unrestricted();  //cria tipo um container com os filtros vazios
+        Specification<Disciplina> spec = Specification.unrestricted();
 
         if (nome != null && !nome.isBlank()) {
             spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("nome")), "%" + nome.toLowerCase() + "%"));
@@ -48,7 +54,7 @@ public class DisciplinaService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("ativo"), ativo));
         }
 
-        return repository.findAll(spec, pageable); //retorna todos os arquivos com os filtos(spec), e as configurações da paginação (pageable)
+        return repository.findAll(spec, pageable);
     }
 
     public DisciplinaResponseDTO create(DisciplinaRequestDTO requestDTO){
