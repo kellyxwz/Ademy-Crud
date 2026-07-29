@@ -7,6 +7,7 @@ import com.example.academy.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,6 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @PreAuthorize("hasAnyRole('PROFESSOR')")
     public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest body){
         String username = body.username();
         String password = body.password();
@@ -81,6 +83,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
+    @PreAuthorize("hasAnyRole('PROFESSOR'), ('ALUNO')")
     public ResponseEntity<UsuarioResumoDTO> resumoPessoal(Authentication authentication){
         String username = authentication.getName();
         String role = authentication.getAuthorities().stream()
@@ -93,8 +96,12 @@ public class AuthController {
     }
 
     @GetMapping("/usuarios")
+    @PreAuthorize("hasAnyRole('PROFESSOR')")
     public ResponseEntity<List<UsuarioResumoDTO>> usuarios(){
-        List
+        List<UsuarioResumoDTO> list = service.resumoUsuario();
+
+        return ResponseEntity.ok().body(list);
+
     }
 
 }
