@@ -1,5 +1,6 @@
 package com.example.academy.service;
 
+import com.example.academy.dto.reponse.UsuarioResumoDTO;
 import com.example.academy.exceptions.ResourceNotFoundException;
 import com.example.academy.model.Usuario;
 import com.example.academy.repository.UsuarioRepository;
@@ -9,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -40,4 +43,7 @@ public class UsuarioService implements UserDetailsService {
 
         return repository.save(user);
     }
+
+
+
 }
