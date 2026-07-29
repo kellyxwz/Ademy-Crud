@@ -44,6 +44,10 @@ public class UsuarioService implements UserDetailsService {
         return repository.save(user);
     }
 
-
+    public List<UsuarioResumoDTO> resumoUsuario(){
+        return repository.findByOderUsernameAsc().stream()
+                .map(usuario -> new UsuarioResumoDTO(usuario.getUsername(), usuario.getRole()))
+                .toList();
+    }
 
 }
