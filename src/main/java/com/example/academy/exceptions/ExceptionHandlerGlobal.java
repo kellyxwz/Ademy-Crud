@@ -3,6 +3,7 @@ package com.example.academy.exceptions;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,6 +28,20 @@ public class ExceptionHandlerGlobal {
         return ResponseEntity.status(status).body(err);
 
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> exception(Exception e, HttpServletRequest request){
+
+        ErrorResponse error = new ErrorResponse(
+                Instant.now(),
+                "Erro interno do Servidor",
+                500,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(500).body(error);
+    }
+
 
 
 }
