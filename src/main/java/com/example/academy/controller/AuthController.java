@@ -1,6 +1,7 @@
 package com.example.academy.controller;
 
 import com.example.academy.config.TokenJwt;
+import com.example.academy.dto.request.RegisterRequest;
 import com.example.academy.service.UsuarioService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,10 +48,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Map<String, String> register(@RequestBody Map<String, String> body){
-        String username = body.get("username");
-        String password = body.get("password");
-        String role = body.getOrDefault("role","ALUNO");
+    public Map<String, String> register(@RequestBody RegisterRequest body){
+        String username = body.username();
+        String password = body.password();
+        String role = body.role() == null || body.role().isBlank() ? "ALUNO" : body.role() ;
 
         if (!role.equals("ALUNO") && !role.equals("PROFESSOR")){
             throw new RuntimeException("Role inválida! Use ALUNO ou PROFESSOR");

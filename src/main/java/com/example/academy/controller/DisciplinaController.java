@@ -4,6 +4,7 @@ import com.example.academy.dto.reponse.DisciplinaResponseDTO;
 import com.example.academy.dto.request.DisciplinaRequestDTO;
 import com.example.academy.model.Disciplina;
 import com.example.academy.service.DisciplinaService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ public class DisciplinaController {
 
     @PostMapping
     @PreAuthorize("hasRole('PROFESSOR')")
-    public ResponseEntity<DisciplinaResponseDTO> create (@RequestBody DisciplinaRequestDTO requestDTO){
+    public ResponseEntity<DisciplinaResponseDTO> create (@Valid @RequestBody DisciplinaRequestDTO requestDTO){
         DisciplinaResponseDTO disciplina = service.create(requestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplina);
@@ -61,7 +62,7 @@ public class DisciplinaController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('PROFESSOR')")
-    public ResponseEntity<DisciplinaResponseDTO> update (@PathVariable Long id, @RequestBody DisciplinaRequestDTO requestDTO){
+    public ResponseEntity<DisciplinaResponseDTO> update (@PathVariable Long id, @Valid @RequestBody DisciplinaRequestDTO requestDTO){
         DisciplinaResponseDTO disciplina = service.update(id, requestDTO);
         return ResponseEntity.ok(disciplina);
     }

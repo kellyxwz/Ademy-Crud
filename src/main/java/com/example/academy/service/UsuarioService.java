@@ -1,5 +1,6 @@
 package com.example.academy.service;
 
+import com.example.academy.exceptions.ResourceNotFoundException;
 import com.example.academy.model.Usuario;
 import com.example.academy.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.User;
@@ -22,14 +23,16 @@ public class UsuarioService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         Usuario usuario = repository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("usuario não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
 
         return User.builder()
                 .username(usuario.getUsername())
                 .password(usuario.getPassword())
                 .roles(usuario.getRole())
                 .build();
+
     }
 
     public Usuario userSave(String username, String password, String role){

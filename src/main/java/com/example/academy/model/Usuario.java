@@ -2,7 +2,9 @@ package com.example.academy.model;
 
 
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuario")
@@ -18,7 +20,9 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, length = 20)
     private String role;
+
 
     public Usuario() {
     }

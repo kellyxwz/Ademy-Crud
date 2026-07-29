@@ -2,6 +2,7 @@ package com.example.academy.service;
 
 import com.example.academy.dto.reponse.DisciplinaResponseDTO;
 import com.example.academy.dto.request.DisciplinaRequestDTO;
+import com.example.academy.exceptions.ResourceNotFoundException;
 import com.example.academy.model.Disciplina;
 import com.example.academy.repository.DisciplinaRepository;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class DisciplinaService {
     }
 
     public DisciplinaResponseDTO findById(Long id){
-        Disciplina disciplina = repository.findById(id).orElseThrow(() -> new RuntimeException("Disciplina não encontrada com o id: " + id));
+        Disciplina disciplina = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado com o id: " + id));
 
         return new DisciplinaResponseDTO(disciplina);
     }
@@ -64,11 +65,14 @@ public class DisciplinaService {
     }
 
     public void delete (Long id){
+        if (!repository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado com o id: " + id);
+        }
         repository.deleteById(id);
     }
 
     public DisciplinaResponseDTO update(Long id, DisciplinaRequestDTO updateData){
-        Disciplina disciplina = repository.findById(id).orElseThrow(() -> new RuntimeException("Disciplina não encontrada"));
+        Disciplina disciplina = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado com o id: " + id));
         updateData(disciplina, updateData);
         repository.save(disciplina);
 
