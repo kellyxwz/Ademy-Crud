@@ -2,6 +2,7 @@ package com.example.academy.service;
 
 import com.example.academy.dto.reponse.ProfessorResponseDTO;
 import com.example.academy.dto.request.ProfessorRequestDTO;
+import com.example.academy.exceptions.ResourceNotFoundException;
 import com.example.academy.model.Professor;
 import com.example.academy.repository.ProfessorRepository;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,7 @@ public class ProfessorService {
     }
 
     public ProfessorResponseDTO findById(Long id){
-        Professor professor = professorRepository.findById(id).orElseThrow(() -> new RuntimeException("Professor não encontrado com id: " + id));
+        Professor professor = professorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado com id: " + id));
         return new ProfessorResponseDTO(professor);
     }
 
@@ -77,11 +78,14 @@ public class ProfessorService {
     }
 
     public void delete (Long id){
+        if (!professorRepository.existsById(id)){
+            throw  new ResourceNotFoundException("Professor não encontrado com id: " + id);
+        }
         professorRepository.deleteById(id);
     }
 
     public ProfessorResponseDTO update(Long id, ProfessorRequestDTO updateData){
-        Professor professor = professorRepository.findById(id).orElseThrow(() -> new RuntimeException("usuário não encontrado"));
+        Professor professor = professorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado com id: " + id));
 
         updateData(professor, updateData);
 
