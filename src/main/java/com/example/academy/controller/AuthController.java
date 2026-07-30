@@ -54,7 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @PreAuthorize("hasAnyRole('PROFESSOR')")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest body){
         String username = body.username();
         String password = body.password();
@@ -83,7 +83,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasAnyRole('PROFESSOR'), ('ALUNO')")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'ALUNO')")
     public ResponseEntity<UsuarioResumoDTO> resumoPessoal(Authentication authentication){
         String username = authentication.getName();
         String role = authentication.getAuthorities().stream()
@@ -96,7 +96,7 @@ public class AuthController {
     }
 
     @GetMapping("/usuarios")
-    @PreAuthorize("hasAnyRole('PROFESSOR')")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<List<UsuarioResumoDTO>> usuarios(){
         List<UsuarioResumoDTO> list = service.resumoUsuario();
 

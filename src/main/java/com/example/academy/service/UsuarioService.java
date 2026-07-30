@@ -45,7 +45,7 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public List<UsuarioResumoDTO> resumoUsuario(){
-        return repository.findByOderUsernameAsc().stream()
+        return repository.findByOrderByUsernameAsc().stream()
                 .map(usuario -> new UsuarioResumoDTO(usuario.getUsername(), usuario.getRole()))
                 .toList();
     }
