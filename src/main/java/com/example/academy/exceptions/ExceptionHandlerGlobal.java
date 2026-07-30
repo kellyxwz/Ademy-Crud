@@ -34,7 +34,7 @@ public class ExceptionHandlerGlobal {
 
         ErrorResponse error = new ErrorResponse(
                 Instant.now(),
-                "Erro interno do Servidor",
+                e.getMessage(),
                 500,
                 request.getRequestURI()
         );

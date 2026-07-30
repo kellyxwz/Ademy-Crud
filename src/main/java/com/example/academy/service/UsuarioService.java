@@ -39,9 +39,11 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario userSave(String username, String password, String role){
-        Usuario user = new Usuario(username, passwordEncoder.encode(password), role );
 
-        return repository.save(user);
+            Usuario user = new Usuario(username, passwordEncoder.encode(password), role);
+
+            return repository.save(user);
+
     }
 
     public List<UsuarioResumoDTO> resumoUsuario(){

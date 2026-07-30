@@ -2,6 +2,7 @@ package com.example.academy.controller;
 
 import com.example.academy.config.TokenJwt;
 import com.example.academy.dto.reponse.UsuarioResumoDTO;
+import com.example.academy.dto.request.RegisterAlunoRequestDTO;
 import com.example.academy.dto.request.RegisterRequest;
 import com.example.academy.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -72,14 +73,13 @@ public class AuthController {
     }
 
     @PostMapping("/register-aluno")
-    public ResponseEntity<Map<String, String>> registerAluno(@Valid @RequestBody RegisterRequest body){
-        String username = body.username();
-        String password = body.password();
+    public ResponseEntity<Map<String, String>> registerAluno(
+            @Valid @RequestBody RegisterAlunoRequestDTO body){
 
-        service.userSave(username,password, "ALUNO");
+        service.userSave(body.username(), body.password(), "ALUNO");
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Map.of("Menssagem:","Aluno Salvo com sucesso"));
+                .body(Map.of("Mensagem","Aluno salvo"));
     }
 
     @GetMapping("/me")
